@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Travel Deals</title>
+    <link rel="stylesheet" href="mystyle.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Travel Deals</h1>
+      <div class="tagline">We'd love to hear from you</div>
+      <div id="datetime"></div>
+    </div>
+    <div class="navbar">
+      <a href="index.html">Home</a>
+      <a href="book.html">Flights</a>
+      <a href="stays.html">Stays</a>
+      <a href="cars.html">Cars</a>
+      <a href="cruise.html">Cruises</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="container">
+      <div class="side">
+        <h3>Display</h3>
+        <p class="side-note">Adjust the page display.</p>
+        <div class="controls">
+          <label
+            >Text Size
+            <input
+              type="number"
+              id="fontSize"
+              value="16"
+              min="10"
+              max="30"
+              onchange="changeFont()"
+            />
+          </label>
+          <label
+            >Background
+            <input
+              type="color"
+              id="bgColor"
+              value="#faf6ef"
+              onchange="changeBg()"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="main" id="mainContent">
+        <span class="eyebrow">Contact</span>
+        <h2>Contact Us</h2>
+        <p class="intro">
+          Fill out the form below and our team will get back to you.
+        </p>
+        <label>First Name</label>
+        <input type="text" id="firstName" placeholder="Example: John" />
+        <label>Last Name</label>
+        <input type="text" id="lastName" placeholder="Example: Smith" />
+        <label>Phone Number</label>
+        <input type="text" id="phone" placeholder="(123) 456-7890" />
+        <label>Gender</label>
+        <input type="radio" id="genderMale" name="gender" value="Male" />
+        <label class="radio-label" for="genderMale">Male</label>
+        <input type="radio" id="genderFemale" name="gender" value="Female" />
+        <label class="radio-label" for="genderFemale">Female</label>
+        <input type="radio" id="genderOther" name="gender" value="Other" />
+        <label class="radio-label" for="genderOther">Other</label>
+        <label>Email Address</label>
+        <input type="text" id="email" placeholder="Example: john@example.com" />
+        <label>Comment</label>
+        <textarea id="comment"></textarea>
+        <button type="button" onclick="submitContact()">Submit</button>
+        <div id="message"></div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Travel Deals</p>
+    </div>
+    <script src="script.js"></script>
+    <script src="contact.js"></script>
+  </body>
+</html>

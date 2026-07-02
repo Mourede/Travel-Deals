@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stays - Travel Deals</title>
+    <link rel="stylesheet" href="mystyle.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Travel Deals</h1>
+      <div class="tagline">Find your next stay</div>
+      <div id="datetime"></div>
+    </div>
+    <div class="navbar">
+      <a href="index.html">Home</a>
+      <a href="book.html">Flights</a>
+      <a href="stays.html">Stays</a>
+      <a href="cars.html">Cars</a>
+      <a href="cruise.html">Cruises</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="container">
+      <div class="side">
+        <h3>Display</h3>
+        <p class="side-note">Adjust the page display.</p>
+        <div class="controls">
+          <label
+            >Text Size
+            <input
+              type="number"
+              id="fontSize"
+              value="16"
+              min="10"
+              max="30"
+              onchange="changeFont()"
+            />
+          </label>
+          <label
+            >Background
+            <input
+              type="color"
+              id="bgColor"
+              value="#faf6ef"
+              onchange="changeBg()"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="main" id="mainContent">
+        <span class="eyebrow">Stays</span>
+        <h2>Search Stays</h2>
+        <p class="intro">Search for a stay in a Texas or California city.</p>
+        <label>City</label>
+        <input type="text" id="city" placeholder="Example: Austin" />
+        <label>Check-in Date</label>
+        <input type="date" id="checkIn" />
+        <label>Check-out Date</label>
+        <input type="date" id="checkOut" />
+        <label>Adults</label>
+        <input type="number" id="adults" value="1" min="0" />
+        <label>Children</label>
+        <input type="number" id="children" value="0" min="0" />
+        <label>Infants</label>
+        <input type="number" id="infants" value="0" min="0" />
+        <button type="button" onclick="searchStays()">Search</button>
+        <div id="message"></div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Travel Deals</p>
+    </div>
+    <script src="script.js"></script>
+    <script src="stays.js"></script>
+  </body>
+</html>

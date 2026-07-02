@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cruises - Travel Deals</title>
+    <link rel="stylesheet" href="mystyle.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Travel Deals</h1>
+      <div class="tagline">Set sail on your next cruise</div>
+      <div id="datetime"></div>
+    </div>
+    <div class="navbar">
+      <a href="index.html">Home</a>
+      <a href="book.html">Flights</a>
+      <a href="stays.html">Stays</a>
+      <a href="cars.html">Cars</a>
+      <a href="cruise.html">Cruises</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="container">
+      <div class="side">
+        <h3>Display</h3>
+        <p class="side-note">Adjust the page display.</p>
+        <div class="controls">
+          <label
+            >Text Size
+            <input
+              type="number"
+              id="fontSize"
+              value="16"
+              min="10"
+              max="30"
+              onchange="changeFont()"
+            />
+          </label>
+          <label
+            >Background
+            <input
+              type="color"
+              id="bgColor"
+              value="#faf6ef"
+              onchange="changeBg()"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="main" id="mainContent">
+        <span class="eyebrow">Cruises</span>
+        <h2>Search Cruises</h2>
+        <p class="intro">
+          Pick a destination, dates, and duration for your cruise.
+        </p>
+        <label>Destination</label>
+        <select id="destination">
+          <option value="">-- Select --</option>
+          <option value="Alaska">Alaska</option>
+          <option value="Bahamas">Bahamas</option>
+          <option value="Europe">Europe</option>
+          <option value="Mexico">Mexico</option>
+        </select>
+        <label>Departing Between</label>
+        <input type="date" id="departDate" />
+        <label>Min Duration (days)</label>
+        <input type="number" id="minDuration" />
+        <label>Max Duration (days)</label>
+        <input type="number" id="maxDuration" />
+        <label>Adults</label>
+        <input type="number" id="adults" value="1" min="0" />
+        <label>Children</label>
+        <input type="number" id="children" value="0" min="0" />
+        <label>Infants</label>
+        <input type="number" id="infants" value="0" min="0" />
+        <button type="button" onclick="searchCruise()">Submit</button>
+        <div id="message"></div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Travel Deals</p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+    <script src="cruise.js"></script>
+  </body>
+</html>
