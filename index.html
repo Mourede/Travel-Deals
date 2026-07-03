@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Travel Deals</title>
+  <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+  <div class="header">
+    <h1>Travel Deals</h1>
+    <div class="tagline">Plan your trip in one place</div>
+    <div id="datetime"></div>
+  </div>
+
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="book.html">Flights</a>
+    <a href="stays.html">Stays</a>
+    <a href="cars.html">Cars</a>
+    <a href="cruise.html">Cruises</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <div class="container">
+
+    <div class="side">
+      <h3>Display</h3>
+      <p class="side-note">Adjust the page display.</p>
+
+      <div class="controls">
+        <label>Text Size
+          <input type="number"
+                 id="fontSize"
+                 value="16"
+                 min="10"
+                 max="30"
+                 onchange="changeFont()">
+        </label>
+
+        <label>Background
+          <input type="color"
+                 id="bgColor"
+                 value="#faf6ef"
+                 onchange="changeBg()">
+        </label>
+      </div>
+    </div>
+
+    <div class="main" id="mainContent">
+
+      <div class="hero">
+        <h2>Welcome to Travel Deals</h2>
+        <p>
+          Discover travel deals on flights, hotels,
+          rental cars, and cruise trips.
+        </p>
+      </div>
+
+      <h2>Choose your option</h2>
+
+      <p class="intro">
+        Click one of the options below to start planning your trip.
+      </p>
+
+      <div class="cards">
+
+        <a class="card" href="book.html" style="text-decoration:none;">
+          <div class="ico">&#9992;</div>
+          <h4>Flights</h4>
+          <p>Book one-way or round trip flights.</p>
+        </a>
+
+        <a class="card" href="stays.html" style="text-decoration:none;">
+          <div class="ico">&#127976;</div>
+          <h4>Stays</h4>
+          <p>Find hotels. </p>
+        </a>
+
+        <a class="card" href="cars.html" style="text-decoration:none;">
+          <div class="ico">&#128663;</div>
+          <h4>Cars</h4>
+          <p>Rent cars.</p>
+        </a>
+
+        <a class="card" href="cruise.html" style="text-decoration:none;">
+          <div class="ico">&#128674;</div>
+          <h4>Cruises</h4>
+          <p>Book cruise trips.</p>
+        </a>
+
+        <a class="card" href="contact.html" style="text-decoration:none;">
+          <div class="ico">&#9993;</div>
+          <h4>Contact Us</h4>
+          <p>Send us a message for questions.</p>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Travel Deals</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
