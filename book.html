@@ -27,13 +27,25 @@
 
     <div class="side">
       <h3>Display</h3>
-      <p>Change the page display.</p>
+      <p class="side-note">Adjust the page display.</p>
 
-      <label>Text Size</label>
-      <input type="number" id="fontSize" value="16" min="10" max="30" onchange="changeFont()">
+      <div class="controls">
+        <label>Text Size
+          <input type="number"
+                 id="fontSize"
+                 value="16"
+                 min="10"
+                 max="30"
+                 onchange="changeFont()">
+        </label>
 
-      <label>Background</label>
-      <input type="color" id="bgColor" value="#faf6ef" onchange="changeBg()">
+        <label>Background
+          <input type="color"
+                 id="bgColor"
+                 value="#faf6ef"
+                 onchange="changeBg()">
+        </label>
+      </div>
     </div>
 
     <div class="main" id="mainContent">
