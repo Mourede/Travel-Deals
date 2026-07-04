@@ -1,10 +1,14 @@
+html {
+    font-size: 16px;
+}
+
 body {
     background-color: #eef3f8;
     color: #1b1b1b;
     font-family: Arial, sans-serif;
-    font-size: 17px;
+    font-size: 1rem;
     margin: 25px 45px;
-    line-height: 28px;
+    line-height: 1.65;
 }
 
 .header {
@@ -22,7 +26,7 @@ body {
 
 .header h1 {
     color: white;
-    font-size: 36px;
+    font-size: 2.25rem;
     text-decoration: underline;
     letter-spacing: 1px;
     text-shadow: 1px 1px 2px black;
@@ -30,7 +34,7 @@ body {
 
 .tagline {
     color: #dbe7f3;
-    font-size: 14px;
+    font-size: 0.875rem;
     word-spacing: 2px;
     letter-spacing: 1px;
 }
@@ -38,7 +42,7 @@ body {
 #datetime {
     margin-top: 8px;
     color: white;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 .navbar {
@@ -59,6 +63,7 @@ body {
     padding: 10px;
     font-weight: bold;
     transition: 0.3s;
+    font-size: 1rem;
 }
 
 .navbar a:hover {
@@ -89,11 +94,11 @@ body {
     color: #002157;
     text-align: center;
     text-decoration: underline;
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 
 .side-note {
-    font-size: 16px;
+    font-size: 1rem;
     opacity: 0.85;
 }
 
@@ -102,6 +107,7 @@ body {
     color: #002157;
     font-weight: bold;
     margin-top: 18px;
+    font-size: 1rem;
 }
 
 .main {
@@ -120,13 +126,13 @@ body {
 .main h2 {
     color: #002157;
     letter-spacing: 2px;
-    font-size: 32px;
+    font-size: 2rem;
 }
 
 .intro {
     color: #4d5c6b;
-    line-height: 26px;
-    font-size: 18px;
+    line-height: 1.6;
+    font-size: 1.125rem;
 }
 
 .eyebrow {
@@ -140,6 +146,7 @@ label {
     margin-top: 14px;
     font-weight: bold;
     color: #002157;
+    font-size: 1rem;
 }
 
 input,
@@ -150,7 +157,7 @@ textarea {
     border-radius: 6px;
     padding: 8px;
     margin-top: 5px;
-    font-size: 15px;
+    font-size: 1rem;
 }
 
 input:focus,
@@ -169,6 +176,7 @@ button {
     margin-top: 15px;
     cursor: pointer;
     transition: 0.3s;
+    font-size: 1rem;
 }
 
 button:hover {
@@ -216,11 +224,13 @@ button:hover {
     color: #002157;
     text-align: center;
     text-decoration: underline;
+    font-size: 1.5rem;
 }
 
 .result p {
     border-bottom: 1px dashed #7d8fa3;
     padding-bottom: 6px;
+    font-size: 1rem;
 }
 
 .hero {
@@ -234,10 +244,12 @@ button:hover {
 
 .hero h2 {
     color: white;
+    font-size: 2rem;
 }
 
 .hero p {
     color: #dbe7f3;
+    font-size: 1rem;
 }
 
 .cards {
@@ -268,18 +280,18 @@ button:hover {
 }
 
 .ico {
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 
 .card h4 {
     color: #002157;
-    font-size: 16px;
+    font-size: 1rem;
     margin-top: 8px;
 }
 
 .card p {
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
 }
 
 .footer {
@@ -291,4 +303,5 @@ button:hover {
     margin-top: 20px;
     font-style: italic;
     text-indent: 1%;
+    font-size: 1rem;
 }
