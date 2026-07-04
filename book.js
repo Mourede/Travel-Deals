@@ -92,8 +92,20 @@ function searchFlight() {
   var infants = document.getElementById("infants").value;
 
 
-  var cityRegex = /^[A-Za-z ]+$/;
-  var passengerRegex = /^[0-4]$/;
+  var cityRegex = /^(Dallas|Houston|Austin|San Antonio|Fort Worth|El Paso|Lubbock|Corpus Christi|Amarillo|Midland|Los Angeles|San Francisco|San Diego|Sacramento|San Jose|Oakland|Fresno|Long Beach|Burbank|Ontario)$/i;
+  var adultsNum = parseInt(adults);
+  var childrenNum = parseInt(children);
+  var infantsNum = parseInt(infants);
+
+  if (
+      isNaN(adultsNum) || adultsNum < 0 || adultsNum > 4 ||
+      isNaN(childrenNum) || childrenNum < 0 || childrenNum > 4 ||
+      isNaN(infantsNum) || infantsNum < 0 || infantsNum > 4
+  ) {
+      message.innerHTML =
+          "<p class='error'>Each passenger category must contain between 0 and 4 passengers.</p>";
+      return;
+  }
 
 
   if (originInput == "" || destinationInput == "") {
@@ -109,8 +121,8 @@ function searchFlight() {
 
 
   if (
-    texasandCaliforniaCities.indexOf(origin) == -1 ||
-    texasandCaliforniaCities.indexOf(destination) == -1
+    !cityRegex.test(originInput) ||
+    !cityRegex.test(destinationInput)
   ) {
     message.innerHTML =
       "<p class='error'>Please enter a valid city in Texas or California.</p>";
@@ -159,7 +171,16 @@ function searchFlight() {
 
   var result = "<div class='result'>";
   result += "<h3>Flight Details</h3>";
-  result += "<p><strong>Trip Type:</strong> " + tripType + "</p>";
+  
+  var tripName;
+
+  if (tripType == "oneway") {
+    tripName = "One Way";
+  } else {
+    tripName = "Round Trip";
+  }
+  result += "<p><strong>Trip Type:</strong> " + tripName + "</p>";
+
   result += "<p><strong>Origin:</strong> " + formatCityName(origin) + "</p>";
   result += "<p><strong>Destination:</strong> " + formatCityName(destination) + "</p>";
   result += "<p><strong>Departure Date:</strong> " + departDate + "</p>";
@@ -174,4 +195,8 @@ function searchFlight() {
   result += "</div>";
 
   message.innerHTML = result;
+
+  window.onload = function () {
+    changeTrip();
+  };
 }
