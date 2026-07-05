@@ -305,3 +305,20 @@ button:hover {
     text-indent: 1%;
     font-size: 1rem;
 }
+
+input[type="radio"],
+input[type="checkbox"] {
+    width: auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.gender-box label {
+    display: inline;
+    margin-top: 0;
+    font-weight: normal;
+}
