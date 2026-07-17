@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hotels>
+
+  <!-- Texas cities -->
+  <hotel>
+    <hotelId>H001</hotelId>
+    <hotelName>Downtown Dallas Suites</hotelName>
+    <city>Dallas</city>
+    <availableRooms>18</availableRooms>
+    <date>2024-09-01</date>
+    <pricePerNight>142.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H002</hotelId>
+    <hotelName>Houston Bayou Inn</hotelName>
+    <city>Houston</city>
+    <availableRooms>25</availableRooms>
+    <date>2024-09-01</date>
+    <pricePerNight>129.50</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H003</hotelId>
+    <hotelName>Austin Live Music Hotel</hotelName>
+    <city>Austin</city>
+    <availableRooms>12</availableRooms>
+    <date>2024-09-05</date>
+    <pricePerNight>168.75</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H004</hotelId>
+    <hotelName>San Antonio Riverwalk Lodge</hotelName>
+    <city>San Antonio</city>
+    <availableRooms>30</availableRooms>
+    <date>2024-09-10</date>
+    <pricePerNight>135.20</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H005</hotelId>
+    <hotelName>Fort Worth Stockyards Hotel</hotelName>
+    <city>Fort Worth</city>
+    <availableRooms>15</availableRooms>
+    <date>2024-09-12</date>
+    <pricePerNight>119.99</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H006</hotelId>
+    <hotelName>El Paso Desert View Inn</hotelName>
+    <city>El Paso</city>
+    <availableRooms>20</availableRooms>
+    <date>2024-09-15</date>
+    <pricePerNight>99.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H007</hotelId>
+    <hotelName>Lubbock Plains Hotel</hotelName>
+    <city>Lubbock</city>
+    <availableRooms>10</availableRooms>
+    <date>2024-09-18</date>
+    <pricePerNight>89.99</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H008</hotelId>
+    <hotelName>Corpus Christi Bay Resort</hotelName>
+    <city>Corpus Christi</city>
+    <availableRooms>22</availableRooms>
+    <date>2024-09-20</date>
+    <pricePerNight>151.30</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H009</hotelId>
+    <hotelName>Amarillo Route 66 Motel</hotelName>
+    <city>Amarillo</city>
+    <availableRooms>14</availableRooms>
+    <date>2024-09-22</date>
+    <pricePerNight>84.50</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H010</hotelId>
+    <hotelName>Midland Petroleum Suites</hotelName>
+    <city>Midland</city>
+    <availableRooms>9</availableRooms>
+    <date>2024-09-25</date>
+    <pricePerNight>112.00</pricePerNight>
+  </hotel>
+
+  <!-- California cities -->
+  <hotel>
+    <hotelId>H011</hotelId>
+    <hotelName>Los Angeles Skyline Hotel</hotelName>
+    <city>Los Angeles</city>
+    <availableRooms>40</availableRooms>
+    <date>2024-09-01</date>
+    <pricePerNight>224.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H012</hotelId>
+    <hotelName>San Francisco Bay Bridge Inn</hotelName>
+    <city>San Francisco</city>
+    <availableRooms>28</availableRooms>
+    <date>2024-09-03</date>
+    <pricePerNight>259.99</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H013</hotelId>
+    <hotelName>San Diego Coastal Resort</hotelName>
+    <city>San Diego</city>
+    <availableRooms>35</availableRooms>
+    <date>2024-09-07</date>
+    <pricePerNight>198.40</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H014</hotelId>
+    <hotelName>Sacramento Capitol Suites</hotelName>
+    <city>Sacramento</city>
+    <availableRooms>17</availableRooms>
+    <date>2024-09-11</date>
+    <pricePerNight>139.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H015</hotelId>
+    <hotelName>San Jose Tech Valley Hotel</hotelName>
+    <city>San Jose</city>
+    <availableRooms>24</availableRooms>
+    <date>2024-09-14</date>
+    <pricePerNight>215.60</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H016</hotelId>
+    <hotelName>Oakland Harbor View Inn</hotelName>
+    <city>Oakland</city>
+    <availableRooms>19</availableRooms>
+    <date>2024-09-16</date>
+    <pricePerNight>174.25</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H017</hotelId>
+    <hotelName>Fresno Central Valley Hotel</hotelName>
+    <city>Fresno</city>
+    <availableRooms>13</availableRooms>
+    <date>2024-09-19</date>
+    <pricePerNight>104.75</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H018</hotelId>
+    <hotelName>Long Beach Marina Hotel</hotelName>
+    <city>Long Beach</city>
+    <availableRooms>21</availableRooms>
+    <date>2024-09-23</date>
+    <pricePerNight>182.90</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H019</hotelId>
+    <hotelName>Burbank Studio Lot Inn</hotelName>
+    <city>Burbank</city>
+    <availableRooms>11</availableRooms>
+    <date>2024-09-27</date>
+    <pricePerNight>163.10</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H020</hotelId>
+    <hotelName>Ontario Airport Gateway Hotel</hotelName>
+    <city>Ontario</city>
+    <availableRooms>26</availableRooms>
+    <date>2024-09-29</date>
+    <pricePerNight>121.45</pricePerNight>
+  </hotel>
+
+</hotels>

@@ -322,3 +322,55 @@ input[type="checkbox"] {
     margin-top: 0;
     font-weight: normal;
 }
+
+/* ---- added for Assignment 3: stays hotel results + contact save note ---- */
+
+.hotel-list {
+    margin-top: 20px;
+}
+
+.hotel-list h3 {
+    color: #002157;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.5rem;
+}
+
+.hotel-card {
+    background-color: white;
+    border-top: 2px solid #002157;
+    border-right: 2px solid #002157;
+    border-bottom: 2px solid #002157;
+    border-left: 5px solid #e31b23;
+    border-radius: 10px;
+    padding: 15px 18px;
+    margin-top: 12px;
+    box-shadow: 3px 3px 8px gray;
+}
+
+.hotel-card h4 {
+    color: #002157;
+    font-size: 1.125rem;
+    margin-bottom: 6px;
+}
+
+.hotel-card p {
+    font-size: 0.95rem;
+    margin: 3px 0;
+}
+
+.btn-select {
+    background-color: #002157;
+    margin-top: 10px;
+}
+
+.btn-select:hover {
+    background-color: #123a72;
+}
+
+.saved-note {
+    color: #4d5c6b;
+    font-style: italic;
+    font-size: 0.875rem;
+    margin-top: 8px;
+}
