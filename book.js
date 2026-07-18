@@ -71,10 +71,61 @@ function formatCityName(city) {
   return result;
 }
 
+function loadFlightsJson() {
+  return fetch("flights.json")
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("Could not load flights.json.");
+      }
+
+      return response.json();
+    });
+}
+
+function getDateDifference(date1, date2) {
+  var firstDate = new Date(date1 + "T00:00:00");
+  var secondDate = new Date(date2 + "T00:00:00");
+
+  return Math.abs(firstDate - secondDate) / (1000 * 60 * 60 * 24);
+}
+
+function findAvailableFlights(
+  flights,
+  origin,
+  destination,
+  requestedDate,
+  totalPassengers
+) {
+  var exactFlights = flights.filter(function(flight) {
+    return (
+      flight.origin.toLowerCase() == origin &&
+      flight.destination.toLowerCase() == destination &&
+      flight.departureDate == requestedDate &&
+      flight.availableSeats >= totalPassengers
+    );
+  });
+
+  if (exactFlights.length > 0) {
+    return exactFlights;
+  }
+
+  return flights.filter(function(flight) {
+    return (
+      flight.origin.toLowerCase() == origin &&
+      flight.destination.toLowerCase() == destination &&
+      getDateDifference(flight.departureDate, requestedDate) <= 3 &&
+      flight.availableSeats >= totalPassengers
+    );
+  });
+}
+
 function searchFlight() {
 
   var message = document.getElementById("message");
   message.innerHTML = "";
+  
+  var flightResults = document.getElementById("flightResults");
+  flightResults.innerHTML = "";
 
   var tripType = document.getElementById("tripType").value;
 
@@ -107,18 +158,17 @@ function searchFlight() {
       return;
   }
 
+  if (adultsNum + childrenNum + infantsNum == 0) {
+    message.innerHTML =
+        "<p class='error'>Please enter at least one passenger.</p>";
+    return;
+  }
+
 
   if (originInput == "" || destinationInput == "") {
     message.innerHTML = "<p class='error'>Please enter origin and destination.</p>";
     return;
   }
-
-
-  if (!cityRegex.test(originInput) || !cityRegex.test(destinationInput)) {
-    message.innerHTML = "<p class='error'>City names must contain letters only.</p>";
-    return;
-  }
-
 
   if (
     !cityRegex.test(originInput) ||
@@ -158,15 +208,6 @@ function searchFlight() {
     }
   }
 
-  if (
-    !passengerRegex.test(adults) ||
-    !passengerRegex.test(children) ||
-    !passengerRegex.test(infants)
-  ) {
-    message.innerHTML =
-      "<p class='error'>Passengers cannot be more than 4 in each category.</p>";
-    return;
-  }
 
 
   var result = "<div class='result'>";
@@ -196,7 +237,215 @@ function searchFlight() {
 
   message.innerHTML = result;
 
-  window.onload = function () {
-    changeTrip();
-  };
+  var totalPassengers = adultsNum + childrenNum + infantsNum;
+
+  loadFlightsJson()
+  .then(function(flights) {
+    var departingFlights = findAvailableFlights(
+      flights,
+      origin,
+      destination,
+      departDate,
+      totalPassengers
+    );
+
+    displayFlights(
+      departingFlights,
+      "Departing Flights",
+      "departing",
+      tripType,
+      adultsNum,
+      childrenNum,
+      infantsNum
+    );
+
+    if (tripType == "round") {
+      var returningFlights = findAvailableFlights(
+        flights,
+        destination,
+        origin,
+        returnDate,
+        totalPassengers
+      );
+
+      displayFlights(
+        returningFlights,
+        "Returning Flights",
+        "returning",
+        tripType,
+        adultsNum,
+        childrenNum,
+        infantsNum
+      );
+    }
+  })
+  .catch(function(error) {
+    document.getElementById("flightResults").innerHTML =
+      "<p class='error'>" + error.message +
+      " Use Live Server to open the project.</p>";
+  });
+
 }
+
+function displayFlights(
+  flights,
+  headingText,
+  flightPart,
+  tripType,
+  adults,
+  children,
+  infants
+) {
+  var flightResults = document.getElementById("flightResults");
+
+  var section = document.createElement("div");
+  section.className = "flight-list";
+
+  var heading = document.createElement("h3");
+  heading.appendChild(document.createTextNode(headingText));
+  section.appendChild(heading);
+
+  if (flights.length == 0) {
+    var noFlight = document.createElement("p");
+    noFlight.className = "error";
+    noFlight.appendChild(
+      document.createTextNode(
+        "No flights were found for this route within 3 days."
+      )
+    );
+
+    section.appendChild(noFlight);
+    flightResults.appendChild(section);
+    return;
+  }
+
+  for (var i = 0; i < flights.length; i++) {
+    createFlightCard(
+      section,
+      flights[i],
+      flightPart,
+      tripType,
+      adults,
+      children,
+      infants
+    );
+  }
+
+  flightResults.appendChild(section);
+}
+
+function createFlightCard(
+  section,
+  flight,
+  flightPart,
+  tripType,
+  adults,
+  children,
+  infants
+) {
+  var card = document.createElement("div");
+  card.className = "hotel-card";
+
+  var heading = document.createElement("h4");
+  heading.appendChild(
+    document.createTextNode("Flight " + flight.flightId)
+  );
+  card.appendChild(heading);
+
+  addFlightLine(card, "Origin", flight.origin);
+  addFlightLine(card, "Destination", flight.destination);
+  addFlightLine(card, "Departure Date", flight.departureDate);
+  addFlightLine(card, "Arrival Date", flight.arrivalDate);
+  addFlightLine(card, "Departure Time", flight.departureTime);
+  addFlightLine(card, "Arrival Time", flight.arrivalTime);
+  addFlightLine(card, "Available Seats", flight.availableSeats);
+  addFlightLine(card, "Adult Price", "$" + flight.price);
+
+  var button = document.createElement("button");
+  button.type = "button";
+  button.className = "btn-select";
+  button.appendChild(document.createTextNode("Add to Cart"));
+
+  button.onclick = function() {
+    addFlightToCart(
+      flight,
+      flightPart,
+      tripType,
+      adults,
+      children,
+      infants
+    );
+  };
+
+  card.appendChild(button);
+  section.appendChild(card);
+}
+
+function addFlightLine(card, label, value) {
+  var paragraph = document.createElement("p");
+  paragraph.appendChild(
+    document.createTextNode(label + ": " + value)
+  );
+
+  card.appendChild(paragraph);
+}
+
+function addFlightToCart(
+  flight,
+  flightPart,
+  tripType,
+  adults,
+  children,
+  infants
+) {
+  var totalPrice =
+    adults * flight.price +
+    children * flight.price * 0.7 +
+    infants * flight.price * 0.1;
+
+  var cartEntry = {
+    type: "flight",
+    tripType: tripType,
+    flightPart: flightPart,
+    flightId: flight.flightId,
+    origin: flight.origin,
+    destination: flight.destination,
+    departureDate: flight.departureDate,
+    arrivalDate: flight.arrivalDate,
+    departureTime: flight.departureTime,
+    arrivalTime: flight.arrivalTime,
+    availableSeats: flight.availableSeats,
+    adultTicketPrice: flight.price,
+    adults: adults,
+    children: children,
+    infants: infants,
+    totalPrice: totalPrice.toFixed(2)
+  };
+
+  if (flightPart == "departing") {
+    localStorage.setItem(
+      "selectedDepartingFlight",
+      JSON.stringify(cartEntry)
+    );
+
+    if (tripType == "oneway") {
+      localStorage.removeItem("selectedReturningFlight");
+    }
+  } else {
+    localStorage.setItem(
+      "selectedReturningFlight",
+      JSON.stringify(cartEntry)
+    );
+  }
+
+  alert(
+    "Flight " +
+    flight.flightId +
+    " added to the cart.\nTotal price: $" +
+    totalPrice.toFixed(2)
+  );
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  changeTrip();
+});
