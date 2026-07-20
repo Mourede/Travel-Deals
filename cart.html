@@ -12,7 +12,7 @@
 
     <div class="header flight-header">
         <h1>Travel Deals</h1>
-        <div class="tagline">Review and Book Your Flight</div>
+        <div class="tagline">Review and book everything you've selected</div>
         <div id="datetime"></div>
     </div>
 
@@ -71,40 +71,14 @@
 
             <span class="eyebrow">Cart</span>
 
-            <h2>Flight Reservation</h2>
+            <h2>Your Cart</h2>
 
             <p class="intro">
-                Review your selected flight(s), enter passenger information,
-                and complete your reservation.
+                Everything you selected on the Stays, Cars, and Flights pages shows up here.
+                Fill in passenger details for any flights and click book when you're ready.
             </p>
 
-            <div id="cartFlights" class="result">
-
-                <h3>Selected Flight(s)</h3>
-
-            </div>
-
-            <div id="priceSummary" class="result">
-
-                <h3>Total Price</h3>
-
-            </div>
-
-            <div id="passengerForms" class="result">
-
-                <h3>Passenger Information</h3>
-
-            </div>
-
-            <button
-                type="button"
-                onclick="bookFlights()">
-
-                Book Flight
-
-            </button>
-
-            <div id="bookingConfirmation"></div>
+            <div id="cartContainer"></div>
 
         </div>
 

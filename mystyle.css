@@ -374,3 +374,16 @@ input[type="checkbox"] {
     font-size: 0.875rem;
     margin-top: 8px;
 }
+
+.passenger-form {
+    background-color: #eef3f8;
+    border: 2px dashed #002157;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-top: 12px;
+}
+
+.passenger-form p {
+    margin: 0 0 6px;
+    color: #002157;
+}
