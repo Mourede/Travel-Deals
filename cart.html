@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Travel Deals</title>
+
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+
+<body>
+
+    <div class="header flight-header">
+        <h1>Travel Deals</h1>
+        <div class="tagline">Review and Book Your Flight</div>
+        <div id="datetime"></div>
+    </div>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="book.html">Flights</a>
+        <a href="stays.html">Stays</a>
+        <a href="cars.html">Cars</a>
+        <a href="cruise.html">Cruises</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="cart.html">Cart</a>
+    </div>
+
+    <div class="container">
+
+        <div class="side">
+
+            <h3>Display</h3>
+
+            <p class="side-note">
+                Adjust the page display.
+            </p>
+
+            <div class="controls">
+
+                <label>
+                    Text Size
+
+                    <input
+                        type="number"
+                        id="fontSize"
+                        value="16"
+                        min="10"
+                        max="30"
+                        onchange="changeFont()">
+
+                </label>
+
+                <label>
+
+                    Background
+
+                    <input
+                        type="color"
+                        id="bgColor"
+                        value="#faf6ef"
+                        onchange="changeBg()">
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="main">
+
+            <span class="eyebrow">Cart</span>
+
+            <h2>Flight Reservation</h2>
+
+            <p class="intro">
+                Review your selected flight(s), enter passenger information,
+                and complete your reservation.
+            </p>
+
+            <div id="cartFlights" class="result">
+
+                <h3>Selected Flight(s)</h3>
+
+            </div>
+
+            <div id="priceSummary" class="result">
+
+                <h3>Total Price</h3>
+
+            </div>
+
+            <div id="passengerForms" class="result">
+
+                <h3>Passenger Information</h3>
+
+            </div>
+
+            <button
+                type="button"
+                onclick="bookFlights()">
+
+                Book Flight
+
+            </button>
+
+            <div id="bookingConfirmation"></div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        <p>Travel Deals</p>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+
+</body>
+</html>
