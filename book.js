@@ -1,8 +1,11 @@
-
+// ======================================================
+// book.js
+// Part 1
+// ======================================================
 
 var texasandCaliforniaCities = [
 
-  // Texas airport cities
+  // Texas
   "dallas",
   "houston",
   "austin",
@@ -14,7 +17,7 @@ var texasandCaliforniaCities = [
   "amarillo",
   "midland",
 
-  // California airport cities
+  // California
   "los angeles",
   "san francisco",
   "san diego",
@@ -25,427 +28,656 @@ var texasandCaliforniaCities = [
   "long beach",
   "burbank",
   "ontario"
+
 ];
 
+var selectedDepartingFlight = null;
+var selectedReturningFlight = null;
+
+// ----------------------------------------------------
+// Trip type
+// ----------------------------------------------------
+
 function changeTrip() {
+
   var tripType = document.getElementById("tripType").value;
-  var returnDiv = document.getElementById("returnDiv");
 
   if (tripType == "round") {
-    returnDiv.style.display = "block";
-  } else {
-    returnDiv.style.display = "none";
+
+      document.getElementById("returnDiv").style.display = "block";
+
   }
+  else {
+
+      document.getElementById("returnDiv").style.display = "none";
+
+  }
+
 }
+
+// ----------------------------------------------------
+// Passenger popup
+// ----------------------------------------------------
 
 function togglePassengers() {
-  var passengerBox = document.getElementById("passengerBox");
 
-  if (passengerBox.style.display == "block") {
-    passengerBox.style.display = "none";
-  } else {
-    passengerBox.style.display = "block";
+  var box = document.getElementById("passengerBox");
+
+  if (box.style.display == "block") {
+
+      box.style.display = "none";
+
   }
+  else {
+
+      box.style.display = "block";
+
+  }
+
 }
+
+// ----------------------------------------------------
+// Date validation
+// ----------------------------------------------------
 
 function dateInRange(dateValue) {
-  var selectedDate = new Date(dateValue);
-  var startDate = new Date("2024-09-01");
-  var endDate = new Date("2024-12-01");
 
-  return selectedDate >= startDate && selectedDate <= endDate;
+  var chosen = new Date(dateValue);
+
+  var start = new Date("2024-09-01");
+
+  var end = new Date("2024-12-01");
+
+  return chosen >= start && chosen <= end;
+
 }
+
+// ----------------------------------------------------
+// Capitalize city
+// ----------------------------------------------------
 
 function formatCityName(city) {
+
   var words = city.split(" ");
-  var result = "";
+
+  var output = "";
 
   for (var i = 0; i < words.length; i++) {
-    result += words[i].charAt(0).toUpperCase() + words[i].slice(1);
 
-    if (i < words.length - 1) {
-      result += " ";
-    }
-  }
+      output +=
+          words[i].charAt(0).toUpperCase() +
+          words[i].substring(1);
 
-  return result;
-}
+      if (i < words.length - 1) {
 
-function loadFlightsJson() {
-  return fetch("flights.json")
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error("Could not load flights.json.");
+          output += " ";
+
       }
 
-      return response.json();
-    });
+  }
+
+  return output;
+
 }
+
+// Logic to select a flight. 
+
+function selectFlight(flightId, type) {
+
+    loadFlightsJson().then(function(flights){
+
+        var flight = flights.find(function(f){
+            return f.flightId == flightId;
+        });
+
+        if(type == "departing"){
+            selectedDepartingFlight = flight;
+        }
+        else{
+            selectedReturningFlight = flight;
+        }
+
+        alert(type + " flight selected.");
+
+    });
+
+}
+
+
+// ----------------------------------------------------
+// Load flights
+// ----------------------------------------------------
+
+function loadFlightsJson() {
+
+  return fetch("flights.json")
+
+      .then(function (response) {
+
+          if (!response.ok) {
+
+              throw new Error("Unable to load flights.json");
+
+          }
+
+          return response.json();
+
+      })
+
+      .then(function (flights) {
+
+          // restore simulated seat counts
+
+          var saved =
+              JSON.parse(localStorage.getItem("flightSeatCounts"));
+
+          if (saved != null) {
+
+              for (var i = 0; i < flights.length; i++) {
+
+                  if (saved[flights[i].flightId] != null) {
+
+                      flights[i].availableSeats =
+                          saved[flights[i].flightId];
+
+                  }
+
+              }
+
+          }
+
+          return flights;
+
+      });
+
+}
+
+// ----------------------------------------------------
+// Difference in days
+// ----------------------------------------------------
 
 function getDateDifference(date1, date2) {
-  var firstDate = new Date(date1 + "T00:00:00");
-  var secondDate = new Date(date2 + "T00:00:00");
 
-  return Math.abs(firstDate - secondDate) / (1000 * 60 * 60 * 24);
+  var first = new Date(date1 + "T00:00:00");
+
+  var second = new Date(date2 + "T00:00:00");
+
+  return Math.abs(first - second) / 86400000;
+
 }
 
+// ----------------------------------------------------
+// Find flights
+// ----------------------------------------------------
+
 function findAvailableFlights(
+
   flights,
   origin,
   destination,
   requestedDate,
   totalPassengers
-) {
-  var exactFlights = flights.filter(function(flight) {
-    return (
-      flight.origin.toLowerCase() == origin &&
-      flight.destination.toLowerCase() == destination &&
-      flight.departureDate == requestedDate &&
-      flight.availableSeats >= totalPassengers
-    );
-  });
 
-  if (exactFlights.length > 0) {
-    return exactFlights;
+) {
+
+  var matches = [];
+
+  for (var i = 0; i < flights.length; i++) {
+
+      var f = flights[i];
+
+      if (
+
+          f.origin.toLowerCase() == origin &&
+          f.destination.toLowerCase() == destination &&
+          f.departureDate == requestedDate &&
+          f.availableSeats >= totalPassengers
+
+      ) {
+
+          matches.push(f);
+
+      }
+
   }
 
-  return flights.filter(function(flight) {
-    return (
-      flight.origin.toLowerCase() == origin &&
-      flight.destination.toLowerCase() == destination &&
-      getDateDifference(flight.departureDate, requestedDate) <= 3 &&
-      flight.availableSeats >= totalPassengers
-    );
-  });
+  if (matches.length > 0) {
+
+      return matches;
+
+  }
+
+  matches = [];
+
+  for (var i = 0; i < flights.length; i++) {
+
+      var f = flights[i];
+
+      if (
+
+          f.origin.toLowerCase() == origin &&
+          f.destination.toLowerCase() == destination &&
+          getDateDifference(
+              f.departureDate,
+              requestedDate
+          ) <= 3 &&
+          f.availableSeats >= totalPassengers
+
+      ) {
+
+          matches.push(f);
+
+      }
+
+  }
+
+  return matches;
+
 }
+
+// ----------------------------------------------------
+// Search
+// ----------------------------------------------------
 
 function searchFlight() {
 
-  var message = document.getElementById("message");
+  var message =
+      document.getElementById("message");
+
+  var results =
+      document.getElementById("flightResults");
+
   message.innerHTML = "";
-  
-  var flightResults = document.getElementById("flightResults");
-  flightResults.innerHTML = "";
 
-  var tripType = document.getElementById("tripType").value;
-
-  var originInput = document.getElementById("origin").value.trim();
-  var destinationInput = document.getElementById("destination").value.trim();
-
-  var origin = originInput.toLowerCase();
-  var destination = destinationInput.toLowerCase();
-
-  var departDate = document.getElementById("departDate").value;
-  var returnDate = document.getElementById("returnDate").value;
-
-  var adults = document.getElementById("adults").value;
-  var children = document.getElementById("children").value;
-  var infants = document.getElementById("infants").value;
+  results.innerHTML = "";
 
 
-  var cityRegex = /^(Dallas|Houston|Austin|San Antonio|Fort Worth|El Paso|Lubbock|Corpus Christi|Amarillo|Midland|Los Angeles|San Francisco|San Diego|Sacramento|San Jose|Oakland|Fresno|Long Beach|Burbank|Ontario)$/i;
-  var adultsNum = parseInt(adults);
-  var childrenNum = parseInt(children);
-  var infantsNum = parseInt(infants);
+
+  var tripType =
+      document.getElementById("tripType").value;
+
+  var originInput =
+      document.getElementById("origin").value.trim();
+
+  var destinationInput =
+      document.getElementById("destination").value.trim();
+
+  var origin =
+      originInput.toLowerCase();
+
+  var destination =
+      destinationInput.toLowerCase();
+
+  var departDate =
+      document.getElementById("departDate").value;
+
+  var returnDate =
+      document.getElementById("returnDate").value;
+
+  var adults =
+      parseInt(document.getElementById("adults").value);
+
+  var children =
+      parseInt(document.getElementById("children").value);
+
+  var infants =
+      parseInt(document.getElementById("infants").value);
+
+
+
+  var cityRegex =
+      /^(Dallas|Houston|Austin|San Antonio|Fort Worth|El Paso|Lubbock|Corpus Christi|Amarillo|Midland|Los Angeles|San Francisco|San Diego|Sacramento|San Jose|Oakland|Fresno|Long Beach|Burbank|Ontario)$/i;
+
+
 
   if (
-      isNaN(adultsNum) || adultsNum < 0 || adultsNum > 4 ||
-      isNaN(childrenNum) || childrenNum < 0 || childrenNum > 4 ||
-      isNaN(infantsNum) || infantsNum < 0 || infantsNum > 4
+
+      isNaN(adults) ||
+      adults < 0 ||
+      adults > 4 ||
+
+      isNaN(children) ||
+      children < 0 ||
+      children > 4 ||
+
+      isNaN(infants) ||
+      infants < 0 ||
+      infants > 4
+
   ) {
+
       message.innerHTML =
-          "<p class='error'>Each passenger category must contain between 0 and 4 passengers.</p>";
+          "<p class='error'>Each passenger category must be between 0 and 4.</p>";
+
       return;
-  }
 
-  if (adultsNum + childrenNum + infantsNum == 0) {
-    message.innerHTML =
-        "<p class='error'>Please enter at least one passenger.</p>";
-    return;
   }
 
 
-  if (originInput == "" || destinationInput == "") {
-    message.innerHTML = "<p class='error'>Please enter origin and destination.</p>";
-    return;
+
+  if (adults + children + infants == 0) {
+
+      message.innerHTML =
+          "<p class='error'>At least one passenger is required.</p>";
+
+      return;
+
   }
+
+
 
   if (
-    !cityRegex.test(originInput) ||
-    !cityRegex.test(destinationInput)
+
+      !cityRegex.test(originInput) ||
+      !cityRegex.test(destinationInput)
+
   ) {
-    message.innerHTML =
-      "<p class='error'>Please enter a valid city in Texas or California.</p>";
-    return;
+
+      message.innerHTML =
+          "<p class='error'>Origin and destination must be Texas or California cities.</p>";
+
+      return;
+
   }
+
+
 
   if (origin == destination) {
-    message.innerHTML =
-      "<p class='error'>Origin and destination cannot be the same.</p>";
-    return;
+
+      message.innerHTML =
+          "<p class='error'>Origin and destination cannot be identical.</p>";
+
+      return;
+
   }
 
 
-  if (departDate == "" || !dateInRange(departDate)) {
-    message.innerHTML =
-      "<p class='error'>Departure date must be between Sep 1, 2024 and Dec 1, 2024.</p>";
-    return;
+
+  if (
+
+      departDate == "" ||
+      !dateInRange(departDate)
+
+  ) {
+
+      message.innerHTML =
+          "<p class='error'>Departure date must be between September 1 and December 1, 2024.</p>";
+
+      return;
+
   }
 
-  
   if (tripType == "round") {
 
-    if (returnDate == "" || !dateInRange(returnDate)) {
-      message.innerHTML =
-        "<p class='error'>Return date must be between Sep 1, 2024 and Dec 1, 2024.</p>";
-      return;
-    }
+      if (
 
-    if (new Date(returnDate) < new Date(departDate)) {
-      message.innerHTML =
-        "<p class='error'>Return date cannot be before departure date.</p>";
-      return;
-    }
+          returnDate == "" ||
+          !dateInRange(returnDate)
+
+      ) {
+
+          message.innerHTML =
+              "<p class='error'>Return date is invalid.</p>";
+
+          return;
+
+      }
+
+      if (
+
+          new Date(returnDate) <
+          new Date(departDate)
+
+      ) {
+
+          message.innerHTML =
+              "<p class='error'>Return date cannot be before departure date.</p>";
+
+          return;
+
+      }
+
   }
 
+  var summary =
+      "<div class='result'>" +
+      "<h3>Flight Search</h3>" +
+      "<p><b>Trip:</b> " +
+      (tripType == "oneway" ? "One Way" : "Round Trip") +
+      "</p>" +
 
+      "<p><b>Origin:</b> " +
+      formatCityName(origin) +
+      "</p>" +
 
-  var result = "<div class='result'>";
-  result += "<h3>Flight Details</h3>";
-  
-  var tripName;
+      "<p><b>Destination:</b> " +
+      formatCityName(destination) +
+      "</p>" +
 
-  if (tripType == "oneway") {
-    tripName = "One Way";
-  } else {
-    tripName = "Round Trip";
-  }
-  result += "<p><strong>Trip Type:</strong> " + tripName + "</p>";
-
-  result += "<p><strong>Origin:</strong> " + formatCityName(origin) + "</p>";
-  result += "<p><strong>Destination:</strong> " + formatCityName(destination) + "</p>";
-  result += "<p><strong>Departure Date:</strong> " + departDate + "</p>";
+      "<p><b>Departure:</b> " +
+      departDate +
+      "</p>";
 
   if (tripType == "round") {
-    result += "<p><strong>Return Date:</strong> " + returnDate + "</p>";
+
+      summary +=
+          "<p><b>Return:</b> " +
+          returnDate +
+          "</p>";
+
   }
 
-  result += "<p><strong>Adults:</strong> " + adults + "</p>";
-  result += "<p><strong>Children:</strong> " + children + "</p>";
-  result += "<p><strong>Infants:</strong> " + infants + "</p>";
-  result += "</div>";
+  summary +=
 
-  message.innerHTML = result;
+      "<p><b>Adults:</b> " + adults + "</p>" +
+      "<p><b>Children:</b> " + children + "</p>" +
+      "<p><b>Infants:</b> " + infants + "</p>" +
+      "</div>";
 
-  var totalPassengers = adultsNum + childrenNum + infantsNum;
+  message.innerHTML = summary;
+
+  var totalPassengers =
+      adults + children + infants;
 
   loadFlightsJson()
-  .then(function(flights) {
-    var departingFlights = findAvailableFlights(
-      flights,
-      origin,
-      destination,
-      departDate,
-      totalPassengers
-    );
 
-    displayFlights(
-      departingFlights,
-      "Departing Flights",
-      "departing",
-      tripType,
-      adultsNum,
-      childrenNum,
-      infantsNum
-    );
+      .then(function (flights) {
 
-    if (tripType == "round") {
-      var returningFlights = findAvailableFlights(
-        flights,
-        destination,
-        origin,
-        returnDate,
-        totalPassengers
-      );
+          var departing =
+              findAvailableFlights(
 
-      displayFlights(
-        returningFlights,
-        "Returning Flights",
-        "returning",
-        tripType,
-        adultsNum,
-        childrenNum,
-        infantsNum
-      );
+                  flights,
+                  origin,
+                  destination,
+                  departDate,
+                  totalPassengers
+
+              );
+
+          displayFlights(
+
+              departing,
+              "Departing Flights",
+              "departing",
+              tripType,
+              adults,
+              children,
+              infants
+
+          );
+
+          if (tripType == "round") {
+
+              var returning =
+                  findAvailableFlights(
+
+                      flights,
+                      destination,
+                      origin,
+                      returnDate,
+                      totalPassengers
+
+                  );
+
+              displayFlights(
+
+                  returning,
+                  "Returning Flights",
+                  "returning",
+                  tripType,
+                  adults,
+                  children,
+                  infants
+
+              );
+
+          }
+
+      })
+
+      .catch(function (error) {
+
+          results.innerHTML =
+              "<p class='error'>" +
+              error.message +
+              "</p>";
+
+      });
+
+        <button onclick="goToCart()">
+            Proceed to Cart
+        </button>
+
+}
+
+function goToCart(){
+
+    var tripType =
+        document.getElementById("tripType").value;
+
+    if(selectedDepartingFlight == null){
+
+        alert("Please select a departing flight.");
+
+        return;
     }
-  })
-  .catch(function(error) {
-    document.getElementById("flightResults").innerHTML =
-      "<p class='error'>" + error.message +
-      " Use Live Server to open the project.</p>";
-  });
+
+    if(tripType == "round" &&
+       selectedReturningFlight == null){
+
+        alert("Please select a returning flight.");
+
+        return;
+    }
+
+    var cart = {
+
+        tripType: tripType,
+
+        departingFlight: selectedDepartingFlight,
+
+        returningFlight: selectedReturningFlight,
+
+        adults: parseInt(document.getElementById("adults").value),
+
+        children: parseInt(document.getElementById("children").value),
+
+        infants: parseInt(document.getElementById("infants").value)
+
+    };
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    window.location.href = "cart.html";
 
 }
 
 function displayFlights(
-  flights,
-  headingText,
-  flightPart,
-  tripType,
-  adults,
-  children,
-  infants
+    flights,
+    heading,
+    type,
+    tripType,
+    adults,
+    children,
+    infants
 ) {
-  var flightResults = document.getElementById("flightResults");
 
-  var section = document.createElement("div");
-  section.className = "flight-list";
+    const results = document.getElementById("flightResults");
 
-  var heading = document.createElement("h3");
-  heading.appendChild(document.createTextNode(headingText));
-  section.appendChild(heading);
+    let html = `
+        <div class="result">
+            <h3>${heading}</h3>
+    `;
 
-  if (flights.length == 0) {
-    var noFlight = document.createElement("p");
-    noFlight.className = "error";
-    noFlight.appendChild(
-      document.createTextNode(
-        "No flights were found for this route within 3 days."
-      )
-    );
+    if (flights.length === 0) {
 
-    section.appendChild(noFlight);
-    flightResults.appendChild(section);
-    return;
-  }
+        html += "<p>No matching flights found.</p>";
 
-  for (var i = 0; i < flights.length; i++) {
-    createFlightCard(
-      section,
-      flights[i],
-      flightPart,
-      tripType,
-      adults,
-      children,
-      infants
-    );
-  }
+    } else {
 
-  flightResults.appendChild(section);
-}
+        flights.forEach(function (flight) {
 
-function createFlightCard(
-  section,
-  flight,
-  flightPart,
-  tripType,
-  adults,
-  children,
-  infants
-) {
-  var card = document.createElement("div");
-  card.className = "hotel-card";
+            html += `
+                <div class="hotel-card">
 
-  var heading = document.createElement("h4");
-  heading.appendChild(
-    document.createTextNode("Flight " + flight.flightId)
-  );
-  card.appendChild(heading);
+                    <p><strong>Flight ID:</strong> ${flight.flightId}</p>
 
-  addFlightLine(card, "Origin", flight.origin);
-  addFlightLine(card, "Destination", flight.destination);
-  addFlightLine(card, "Departure Date", flight.departureDate);
-  addFlightLine(card, "Arrival Date", flight.arrivalDate);
-  addFlightLine(card, "Departure Time", flight.departureTime);
-  addFlightLine(card, "Arrival Time", flight.arrivalTime);
-  addFlightLine(card, "Available Seats", flight.availableSeats);
-  addFlightLine(card, "Adult Price", "$" + flight.price);
+                    <p><strong>Origin:</strong>
+                    ${flight.origin}</p>
 
-  var button = document.createElement("button");
-  button.type = "button";
-  button.className = "btn-select";
-  button.appendChild(document.createTextNode("Add to Cart"));
+                    <p><strong>Destination:</strong>
+                    ${flight.destination}</p>
 
-  button.onclick = function() {
-    addFlightToCart(
-      flight,
-      flightPart,
-      tripType,
-      adults,
-      children,
-      infants
-    );
-  };
+                    <p><strong>Departure Date:</strong>
+                    ${flight.departureDate}</p>
 
-  card.appendChild(button);
-  section.appendChild(card);
-}
+                    <p><strong>Arrival Date:</strong>
+                    ${flight.arrivalDate}</p>
 
-function addFlightLine(card, label, value) {
-  var paragraph = document.createElement("p");
-  paragraph.appendChild(
-    document.createTextNode(label + ": " + value)
-  );
+                    <p><strong>Departure Time:</strong>
+                    ${flight.departureTime}</p>
 
-  card.appendChild(paragraph);
-}
+                    <p><strong>Arrival Time:</strong>
+                    ${flight.arrivalTime}</p>
 
-function addFlightToCart(
-  flight,
-  flightPart,
-  tripType,
-  adults,
-  children,
-  infants
-) {
-  var totalPrice =
-    adults * flight.price +
-    children * flight.price * 0.7 +
-    infants * flight.price * 0.1;
+                    <p><strong>Available Seats:</strong>
+                    ${flight.availableSeats}</p>
 
-  var cartEntry = {
-    type: "flight",
-    tripType: tripType,
-    flightPart: flightPart,
-    flightId: flight.flightId,
-    origin: flight.origin,
-    destination: flight.destination,
-    departureDate: flight.departureDate,
-    arrivalDate: flight.arrivalDate,
-    departureTime: flight.departureTime,
-    arrivalTime: flight.arrivalTime,
-    availableSeats: flight.availableSeats,
-    adultTicketPrice: flight.price,
-    adults: adults,
-    children: children,
-    infants: infants,
-    totalPrice: totalPrice.toFixed(2)
-  };
+                    <button
+                        class="btn-select"
+                        onclick="selectFlight('${flight.flightId}','${type}')">
 
-  if (flightPart == "departing") {
-    localStorage.setItem(
-      "selectedDepartingFlight",
-      JSON.stringify(cartEntry)
-    );
+                        Add to Cart
 
-    if (tripType == "oneway") {
-      localStorage.removeItem("selectedReturningFlight");
+                    </button>
+
+                </div>
+            `;
+
+        });
+
     }
-  } else {
-    localStorage.setItem(
-      "selectedReturningFlight",
-      JSON.stringify(cartEntry)
-    );
-  }
 
-  alert(
-    "Flight " +
-    flight.flightId +
-    " added to the cart.\nTotal price: $" +
-    totalPrice.toFixed(2)
-  );
+    html += "</div>";
+
+    results.innerHTML += html;
+
+    if (tripType === "oneway" ||
+        (tripType === "round" &&
+         heading === "Returning Flights")) {
+
+        results.innerHTML += `
+            <button
+                class="btn-select"
+                onclick="goToCart()">
+
+                Proceed to Cart
+
+            </button>
+        `;
+    }
+
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  changeTrip();
-});
