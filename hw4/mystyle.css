@@ -1,0 +1,563 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: #eef3f8;
+    color: #1b1b1b;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    margin: 25px 45px;
+    line-height: 1.65;
+}
+
+.header {
+    background-color: #002157;
+    color: white;
+    border-top: 4px solid #e31b23;
+    border-right: 3px solid #002157;
+    border-bottom: 3px solid #002157;
+    border-left: 3px solid #002157;
+    border-radius: 10px;
+    text-align: center;
+    padding: 18px 15px;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    color: white;
+    font-size: 2.25rem;
+    text-decoration: underline;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.tagline {
+    color: #dbe7f3;
+    font-size: 0.875rem;
+    word-spacing: 2px;
+    letter-spacing: 1px;
+}
+
+#datetime {
+    margin-top: 8px;
+    color: white;
+    font-size: 0.875rem;
+}
+
+.navbar {
+    background-color: white;
+    border-top: 2px solid #002157;
+    border-right: 2px solid #002157;
+    border-bottom: 2px solid #e31b23;
+    border-left: 2px solid #002157;
+    border-radius: 10px;
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    color: #002157;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.navbar a:hover {
+    background-color: #002157;
+    color: white;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.side {
+    width: 260px;
+    background-color: #dbe7f3;
+    border-top: 2px dashed #002157;
+    border-right: 2px dashed #002157;
+    border-bottom: 2px dashed #002157;
+    border-left: 2px dashed #002157;
+    border-radius: 10px;
+    padding: 25px 22px;
+    box-shadow: 4px 4px 10px gray;
+}
+
+.side h3 {
+    color: #002157;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.5rem;
+}
+
+.side-note {
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+.controls label {
+    display: block;
+    color: #002157;
+    font-weight: bold;
+    margin-top: 18px;
+    font-size: 1rem;
+}
+
+.main {
+    flex: 1;
+    background-color: white;
+    border-top: 3px solid #002157;
+    border-right: 3px solid #002157;
+    border-bottom: 3px solid #002157;
+    border-left: 5px solid #e31b23;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 4px 4px 10px gray;
+    min-height: 450px;
+}
+
+/* Font sizes from here down are in em rather than rem so that everything
+   inside #mainContent scales with the "Text Size" control, while the
+   header, navigation bar, sidebar and footer stay at a fixed size. */
+
+.main h2 {
+    color: #002157;
+    letter-spacing: 2px;
+    font-size: 2em;
+}
+
+.intro {
+    color: #4d5c6b;
+    line-height: 1.6;
+    font-size: 1.125em;
+}
+
+.eyebrow {
+    color: #e31b23;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+label {
+    display: block;
+    margin-top: 14px;
+    font-weight: bold;
+    color: #002157;
+    font-size: 1em;
+}
+
+input,
+select,
+textarea {
+    width: 90%;
+    border: 1px solid #7d8fa3;
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 1em;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #002157;
+    outline: none;
+}
+
+button {
+    background-color: #e31b23;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    /* margin-right keeps side by side buttons, like Book and Remove on the
+       cart cards, from sitting flush against each other */
+    margin-top: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #b31217;
+    transform: scale(1.03);
+}
+
+.btn-ghost {
+    background-color: #002157;
+}
+
+.btn-ghost:hover {
+    background-color: #123a72;
+}
+
+#passengerBox {
+    background-color: #eef3f8;
+    border: 2px dashed #002157;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.error {
+    color: #b31217;
+    background-color: #ffe9eb;
+    border-left: 5px solid #e31b23;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 6px;
+}
+
+.result {
+    background-color: #eef3f8;
+    border-top: 2px solid #002157;
+    border-right: 2px solid #002157;
+    border-bottom: 2px solid #002157;
+    border-left: 5px solid #e31b23;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 18px;
+}
+
+.result h3 {
+    color: #002157;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.5em;
+}
+
+.result p {
+    border-bottom: 1px dashed #7d8fa3;
+    padding-bottom: 6px;
+    font-size: 1em;
+}
+
+.hero {
+    background-color: #002157;
+    color: white;
+    border-left: 6px solid #e31b23;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    color: white;
+    font-size: 2em;
+}
+
+.hero p {
+    color: #dbe7f3;
+    font-size: 1em;
+}
+
+/* flex rather than floats so the cards keep their shape when the
+   "Text Size" control scales the main content up */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.card {
+    flex: 1 1 9em;
+    max-width: 14em;
+    min-height: 9em;
+    background-color: white;
+    border-top: 2px solid #002157;
+    border-right: 2px solid #002157;
+    border-bottom: 2px solid #002157;
+    border-left: 4px solid #e31b23;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    color: #1b1b1b;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.04);
+    box-shadow: 3px 3px 8px gray;
+}
+
+/* without an explicit height a color input collapses to a thin sliver
+   instead of showing the swatch it is currently set to */
+input[type="color"] {
+    height: 38px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.ico {
+    font-size: 1.375em;
+}
+
+.card h4 {
+    color: #002157;
+    font-size: 1em;
+    margin-top: 8px;
+}
+
+.card p {
+    font-size: 0.8125em;
+    line-height: 1.5;
+}
+
+.footer {
+    background-color: #002157;
+    color: white;
+    border-top: 4px solid #e31b23;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    font-style: italic;
+    text-indent: 1%;
+    font-size: 1rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    width: auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.gender-box label {
+    display: inline;
+    margin-top: 0;
+    font-weight: normal;
+}
+
+/* ---- added for Assignment 3: stays hotel results + contact save note ---- */
+
+.hotel-list {
+    margin-top: 20px;
+}
+
+.hotel-list h3 {
+    color: #002157;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.5em;
+}
+
+.hotel-card {
+    background-color: white;
+    border-top: 2px solid #002157;
+    border-right: 2px solid #002157;
+    border-bottom: 2px solid #002157;
+    border-left: 5px solid #e31b23;
+    border-radius: 10px;
+    padding: 15px 18px;
+    margin-top: 12px;
+    box-shadow: 3px 3px 8px gray;
+}
+
+.hotel-card h4 {
+    color: #002157;
+    font-size: 1.125em;
+    margin-bottom: 6px;
+}
+
+.hotel-card p {
+    font-size: 0.95em;
+    margin: 3px 0;
+}
+
+.btn-select {
+    background-color: #002157;
+    margin-top: 10px;
+}
+
+.btn-select:hover {
+    background-color: #123a72;
+}
+
+.saved-note {
+    color: #4d5c6b;
+    font-style: italic;
+    font-size: 0.875em;
+    margin-top: 8px;
+}
+
+.passenger-form {
+    background-color: #eef3f8;
+    border: 2px dashed #002157;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-top: 12px;
+}
+
+.passenger-form p {
+    margin: 0 0 6px;
+    color: #002157;
+}
+
+/* ---- booking state ---- */
+
+/* something already booked: still listed, but clearly not bookable */
+.sold-out {
+    opacity: 0.7;
+    border-left-color: #7d8fa3;
+    background-color: #f4f6f9;
+}
+
+.sold-out h4 {
+    color: #4d5c6b;
+    text-decoration: line-through;
+}
+
+/* the flight currently chosen as the departing or returning leg */
+.selected-card {
+    border-left-width: 10px;
+    border-left-color: #1a7f37;
+    background-color: #f2fbf4;
+}
+
+.confirmation {
+    border-left-color: #1a7f37;
+    background-color: #f2fbf4;
+}
+
+.confirmation h3 {
+    color: #1a7f37;
+}
+
+/* ---- added for Assignment 4 ---- */
+
+/* the signed-in user's name, shown in the header on every page */
+.whoami {
+    margin-top: 10px;
+    color: #dbe7f3;
+    font-size: 0.875rem;
+}
+
+.whoami a {
+    color: white;
+    text-decoration: underline;
+}
+
+.admin-tag {
+    background-color: #e31b23;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.navbar a.active {
+    background-color: #dbe7f3;
+    border-radius: 4px;
+}
+
+.ok-note {
+    color: #1a7f37;
+    background-color: #f2fbf4;
+    border-left: 5px solid #1a7f37;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 6px;
+}
+
+.field-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.field-row label {
+    flex: 1 1 12em;
+}
+
+/* the passenger icon in section 7, and the count form it opens */
+.pax-toggle {
+    background-color: #002157;
+}
+
+.pax-summary {
+    color: #4d5c6b;
+    font-size: 0.95em;
+}
+
+.trip-type {
+    margin-top: 10px;
+}
+
+.trip-type label {
+    display: inline-block;
+    margin-right: 20px;
+    font-weight: normal;
+}
+
+/* report output and confirmation breakdowns */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 0.9em;
+}
+
+.report-table th {
+    background-color: #002157;
+    color: white;
+    text-align: left;
+    padding: 8px 10px;
+}
+
+.report-table td {
+    border-bottom: 1px solid #dbe7f3;
+    padding: 7px 10px;
+}
+
+.report-table tr:nth-child(even) td {
+    background-color: #f4f7fb;
+}
+
+.big-number {
+    color: #002157;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.query-card {
+    background-color: #eef3f8;
+    border: 2px dashed #002157;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-top: 14px;
+}
+
+.query-card h4 {
+    color: #002157;
+    margin: 0 0 8px;
+    font-size: 1.05em;
+}
+
+.admin-only {
+    border-color: #e31b23;
+}
+
+.muted {
+    color: #4d5c6b;
+    font-style: italic;
+}
+
+.spinner {
+    color: #4d5c6b;
+    font-style: italic;
+}
