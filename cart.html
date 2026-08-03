@@ -58,7 +58,7 @@
                     <input
                         type="color"
                         id="bgColor"
-                        value="#faf6ef"
+                        value="#eef3f8"
                         onchange="changeBg()">
 
                 </label>
@@ -67,7 +67,7 @@
 
         </div>
 
-        <div class="main">
+        <div class="main" id="mainContent">
 
             <span class="eyebrow">Cart</span>
 
@@ -78,7 +78,15 @@
                 Fill in passenger details for any flights and click book when you're ready.
             </p>
 
+            <div id="cartMessage"></div>
+
+            <div id="confirmationContainer"></div>
+
             <div id="cartContainer"></div>
+
+            <div id="bookingsContainer"></div>
+
+            <div id="dataTools"></div>
 
         </div>
 
@@ -90,6 +98,7 @@
 
     </div>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
     <script src="cart.js"></script>
 

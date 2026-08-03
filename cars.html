@@ -36,7 +36,7 @@
         </label>
 
         <label>Background
-          <input type="color" id="bgColor" value="#faf6ef" onchange="changeBg()">
+          <input type="color" id="bgColor" value="#eef3f8" onchange="changeBg()">
         </label>
       </div>
     </div>
@@ -45,6 +45,10 @@
       <span class="eyebrow">Cars</span>
       <h2>Rent a Car</h2>
       <p class="intro">Pick a city, car type, and travel dates.</p>
+
+      <div id="suggestionPanel"></div>
+
+      <h3>Search All Cars</h3>
 
       <label>City</label>
       <input type="text" id="city" placeholder="Example: Austin">
@@ -75,6 +79,7 @@
     <p>Travel Deals</p>
   </div>
 
+  <script src="data.js"></script>
   <script src="script.js"></script>
   <script src="cars.js"></script>
 </body>

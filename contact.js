@@ -70,7 +70,7 @@ function submitContact() {
     submittedAt: new Date().toISOString()
   };
 
-  saveContactAsJSON(contactEntry);
+  var total = saveContactAsJSON(contactEntry);
 
   var result = "<div class='result'>";
   result += "<h3>Message Received</h3>";
@@ -79,40 +79,53 @@ function submitContact() {
   result += "<p><strong>Gender:</strong> " + genderChecked.value + "</p>";
   result += "<p><strong>Email:</strong> " + email + "</p>";
   result += "<p><strong>Comment:</strong> " + comment + "</p>";
-  result += "<p class='saved-note'>Saved to contact-submissions.json</p>";
+  result += "<p class='saved-note'>Stored in contact-submissions.json (" +
+            total + " submission(s) saved so far).</p>";
   result += "</div>";
 
   message.innerHTML = result;
+
+  var downloadBtn = document.createElement("button");
+  downloadBtn.type = "button";
+  downloadBtn.className = "btn-select";
+  downloadBtn.appendChild(document.createTextNode("Download contact-submissions.json"));
+  downloadBtn.onclick = downloadContactSubmissions;
+
+  message.appendChild(downloadBtn);
 }
 
 
-// there's no server here, so "store them in a JSON file" is done two ways:
-//  1) keep a running list in localStorage so it survives a page refresh
-//  2) actually download a real .json file with all the submissions in it
+// there's no server here, so the submissions are kept in localStorage
+// (which survives a refresh) and written out as a real .json file when
+// the download button is clicked
 function saveContactAsJSON(newEntry) {
 
-  var existing = localStorage.getItem("contactSubmissions");
-  var submissions;
-
-  if (existing) {
-    submissions = JSON.parse(existing);
-  } else {
-    submissions = [];
-  }
+  var submissions = readContactSubmissions();
 
   submissions.push(newEntry);
   localStorage.setItem("contactSubmissions", JSON.stringify(submissions));
 
-  var jsonText = JSON.stringify(submissions, null, 2);
-  var blob = new Blob([jsonText], { type: "application/json" });
-  var url = URL.createObjectURL(blob);
+  return submissions.length;
+}
 
-  var downloadLink = document.createElement("a");
-  downloadLink.href = url;
-  downloadLink.download = "contact-submissions.json";
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
+function readContactSubmissions() {
 
-  URL.revokeObjectURL(url);
+  var existing = localStorage.getItem("contactSubmissions");
+
+  if (!existing) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(existing);
+  } catch (e) {
+    return [];
+  }
+}
+
+function downloadContactSubmissions() {
+
+  var jsonText = JSON.stringify(readContactSubmissions(), null, 2);
+
+  TravelData.downloadJson("contact-submissions.json", jsonText);
 }

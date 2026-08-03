@@ -1,14 +1,9 @@
+// This page is built with jQuery methods, as the assignment requires.
+// The Sep 1 - Dec 1 2024 date check is shared with the other pages via
+// TravelData.dateInRange in data.js.
+
 // allowed cruise destinations
 var validDestinations = ["Alaska", "Bahamas", "Europe", "Mexico"];
-
-// check if date is valid for the assignment
-function dateInRange(dateText) {
-  var selectedDate = new Date(dateText);
-  var startDate = new Date("2024-09-01");
-  var endDate = new Date("2024-12-01");
-
-  return selectedDate >= startDate && selectedDate <= endDate;
-}
 
 function showError(text) {
   $("#message").html("<p class='error'>" + text + "</p>");
@@ -41,7 +36,7 @@ function searchCruise() {
     return;
   }
 
-  if (departDate == "" || !dateInRange(departDate)) {
+  if (departDate == "" || !TravelData.dateInRange(departDate)) {
     showError("Departure date must be between Sep 1, 2024 and Dec 1, 2024.");
     return;
   }
