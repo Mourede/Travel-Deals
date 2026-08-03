@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Available hotels (assignment section 8).
+
+  Exactly the four fields the hotels table has: hotel-id, hotel name, city
+  and price per night. There is deliberately no room count, because the
+  assignment says to assume hotels always have rooms available.
+
+  20 hotels, 10 in Texas and 10 in California. The admin loads this file
+  into the hotels table from the my-account page.
+-->
+<hotels>
+
+  <!-- Texas -->
+  <hotel>
+    <hotelId>H001</hotelId>
+    <hotelName>Downtown Dallas Suites</hotelName>
+    <city>Dallas</city>
+    <pricePerNight>142.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H002</hotelId>
+    <hotelName>Houston Bayou Inn</hotelName>
+    <city>Houston</city>
+    <pricePerNight>129.50</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H003</hotelId>
+    <hotelName>Austin Live Music Hotel</hotelName>
+    <city>Austin</city>
+    <pricePerNight>168.75</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H004</hotelId>
+    <hotelName>San Antonio Riverwalk Lodge</hotelName>
+    <city>San Antonio</city>
+    <pricePerNight>135.20</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H005</hotelId>
+    <hotelName>Fort Worth Stockyards Hotel</hotelName>
+    <city>Fort Worth</city>
+    <pricePerNight>119.99</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H006</hotelId>
+    <hotelName>El Paso Desert View Inn</hotelName>
+    <city>El Paso</city>
+    <pricePerNight>99.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H007</hotelId>
+    <hotelName>Lubbock Plains Hotel</hotelName>
+    <city>Lubbock</city>
+    <pricePerNight>89.99</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H008</hotelId>
+    <hotelName>Corpus Christi Bay Resort</hotelName>
+    <city>Corpus Christi</city>
+    <pricePerNight>151.30</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H009</hotelId>
+    <hotelName>Amarillo Route 66 Motel</hotelName>
+    <city>Amarillo</city>
+    <pricePerNight>84.50</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H010</hotelId>
+    <hotelName>Midland Petroleum Suites</hotelName>
+    <city>Midland</city>
+    <pricePerNight>112.00</pricePerNight>
+  </hotel>
+
+  <!-- A second hotel in the larger Texas cities, so a search returns
+       more than one result and the most-expensive report has range -->
+  <hotel>
+    <hotelId>H021</hotelId>
+    <hotelName>Dallas Arts District Grand</hotelName>
+    <city>Dallas</city>
+    <pricePerNight>288.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H022</hotelId>
+    <hotelName>Houston Medical Center Hotel</hotelName>
+    <city>Houston</city>
+    <pricePerNight>176.40</pricePerNight>
+  </hotel>
+
+  <!-- California -->
+  <hotel>
+    <hotelId>H011</hotelId>
+    <hotelName>Los Angeles Skyline Hotel</hotelName>
+    <city>Los Angeles</city>
+    <pricePerNight>224.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H012</hotelId>
+    <hotelName>San Francisco Bay Bridge Inn</hotelName>
+    <city>San Francisco</city>
+    <pricePerNight>259.99</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H013</hotelId>
+    <hotelName>San Diego Coastal Resort</hotelName>
+    <city>San Diego</city>
+    <pricePerNight>198.40</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H014</hotelId>
+    <hotelName>Sacramento Capitol Suites</hotelName>
+    <city>Sacramento</city>
+    <pricePerNight>139.00</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H015</hotelId>
+    <hotelName>San Jose Tech Valley Hotel</hotelName>
+    <city>San Jose</city>
+    <pricePerNight>215.60</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H016</hotelId>
+    <hotelName>Oakland Harbor View Inn</hotelName>
+    <city>Oakland</city>
+    <pricePerNight>174.25</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H017</hotelId>
+    <hotelName>Fresno Central Valley Hotel</hotelName>
+    <city>Fresno</city>
+    <pricePerNight>104.75</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H018</hotelId>
+    <hotelName>Long Beach Marina Hotel</hotelName>
+    <city>Long Beach</city>
+    <pricePerNight>182.90</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H019</hotelId>
+    <hotelName>Burbank Studio Lot Inn</hotelName>
+    <city>Burbank</city>
+    <pricePerNight>163.10</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H020</hotelId>
+    <hotelName>Ontario Airport Gateway Hotel</hotelName>
+    <city>Ontario</city>
+    <pricePerNight>121.45</pricePerNight>
+  </hotel>
+
+  <hotel>
+    <hotelId>H023</hotelId>
+    <hotelName>Los Angeles Beverly Terrace</hotelName>
+    <city>Los Angeles</city>
+    <pricePerNight>312.75</pricePerNight>
+  </hotel>
+
+</hotels>

@@ -1,0 +1,8 @@
+# Written by the app on the first comment (section 4), so it is not checked in.
+contacts.xml
+
+# Local database credentials, if you need to override config/db.php.
+config/db.local.php
+
+# Screenshots taken while checking the layout.
+screenshot-*.png
