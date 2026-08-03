@@ -395,6 +395,17 @@ else
     echo "  FAIL  rollback leaked: bookings $BOOKINGS_BEFORE -> $BOOKINGS_AFTER, seats $SEATS_F006"
 fi
 
+# Put the seats back to whatever flights.json says, read from the file rather
+# than hardcoded so it cannot drift. Without this the run leaves a flight
+# stuck at 1 seat, which looks like a bug to anyone browsing afterwards.
+F006_SEATS=$(python3 -c "
+import json
+flights = json.load(open('flights.json'))
+print(next(f['availableSeats'] for f in flights if f['flightId'] == 'F006'))
+")
+sql "UPDATE flights SET available_seats = $F006_SEATS WHERE flight_id = 'F006'"
+api cart_remove.php "$USER" '{"kind":"flight"}' > /dev/null
+
 echo
 echo "=================================================="
 echo " Section 8: hotels"
