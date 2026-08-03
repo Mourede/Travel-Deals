@@ -94,6 +94,113 @@ check "a normal user cannot load data" \
 
 echo
 echo "=================================================="
+echo " Section 1: register and login"
+echo "=================================================="
+GOOD='{"phone":"214-555-1234","password":"secret123","confirmPassword":"secret123","firstName":"Jane","lastName":"Doe","dateOfBirth":"1990-04-12","email":"jane@example.com","gender":"female"}'
+
+# Posts the known-good registration with some fields overridden, given as
+# field value field value. Built in Python rather than by splicing quotes into
+# a shell string, which is unreadable and easy to get wrong.
+signup() {
+    local body
+    body=$(python3 -c "
+import json, sys
+
+payload = json.loads(sys.argv[1])
+overrides = sys.argv[2:]
+
+for name, value in zip(overrides[::2], overrides[1::2]):
+    payload[name] = value
+
+print(json.dumps(payload))
+" "$GOOD" "$@")
+
+    api register.php '{"logout":true}' "$body"
+}
+
+check "rule 1: a missing first name is rejected" \
+    "$(signup firstName '')" \
+    "not d['ok'] and 'first name' in d['error'].lower()"
+
+check "rule 1: gender is optional" \
+    "$(api register.php '{"logout":true}' '{"phone":"210-555-0001","password":"secret123","confirmPassword":"secret123","firstName":"No","lastName":"Gender","dateOfBirth":"1990-01-01","email":"ng@example.com"}')" \
+    "d['ok']"
+
+check "rule 3: an unformatted phone number is rejected" \
+    "$(signup phone 2145551234)" \
+    "not d['ok'] and 'ddd-ddd-dddd' in d['error']"
+
+check "rule 4: mismatched passwords are rejected" \
+    "$(signup confirmPassword different1)" \
+    "not d['ok'] and 'do not match' in d['error']"
+
+check "rule 5: a 7-character password is rejected" \
+    "$(signup password short12 confirmPassword short12)" \
+    "not d['ok'] and 'at least 8' in d['error']"
+
+check "rule 6: an impossible date of birth is rejected" \
+    "$(signup dateOfBirth 2024-02-31)" \
+    "not d['ok'] and 'real date' in d['error']"
+
+check "rule 6: a 2-digit year is rejected" \
+    "$(signup dateOfBirth 90-4-12)" \
+    "not d['ok'] and 'real date' in d['error']"
+
+check "rule 7: an email with no .com is rejected" \
+    "$(signup email jane@example.org)" \
+    "not d['ok'] and '.com' in d['error']"
+
+check "rule 7: an email with no @ is rejected" \
+    "$(signup email jane.example.com)" \
+    "not d['ok'] and '@' in d['error']"
+
+check "every broken rule is reported at once" \
+    "$(api register.php '{"logout":true}' '{"phone":"2145551234","password":"short","confirmPassword":"other","firstName":"","lastName":"Doe","dateOfBirth":"2024-02-31","email":"nope"}')" \
+    "not d['ok'] and d['error'].count('.') >= 5"
+
+check "a valid registration succeeds and logs the user in" \
+    "$(api register.php '{"logout":true}' "$GOOD")" \
+    "d['ok'] and d['phone'] == '214-555-1234'"
+
+check "rule 2: the same phone number cannot register twice" \
+    "$(api register.php '{"logout":true}' "$GOOD")" \
+    "not d['ok'] and 'already registered' in d['error']"
+
+check "the password is stored hashed, not in plain text" \
+    "$(sql "SELECT password FROM users WHERE phone='214-555-1234'" | python3 -c "
+import sys
+stored = sys.stdin.read().strip()
+hashed = stored.startswith('\$2y\$') and stored != 'secret123'
+print('{\"ok\": true, \"hashed\": %s}' % ('true' if hashed else 'false'))
+")" \
+    "d['hashed'] is True"
+
+check "login with the right password works" \
+    "$(api login.php '{"logout":true}' '{"phone":"214-555-1234","password":"secret123"}')" \
+    "d['ok'] and d['isAdmin'] is False"
+
+check "login with the wrong password is refused" \
+    "$(api login.php '{"logout":true}' '{"phone":"214-555-1234","password":"wrongpass"}')" \
+    "not d['ok']"
+
+check "login with an unknown phone number is refused" \
+    "$(api login.php '{"logout":true}' '{"phone":"999-999-9999","password":"secret123"}')" \
+    "not d['ok']"
+
+check "an unknown phone and a wrong password look the same" \
+    "$(api login.php '{"logout":true}' '{"phone":"999-999-9999","password":"whatever1"}')" \
+    "not d['ok'] and 'do not match an account' in d['error']"
+
+check "the admin logs in and is recognised as admin" \
+    "$(api login.php '{"logout":true}' '{"phone":"222-222-2222","password":"admin123"}')" \
+    "d['ok'] and d['isAdmin'] is True"
+
+check "a normal user is not an admin" \
+    "$(api account_query.php '{"phone":"214-555-1234","firstName":"Jane","lastName":"Doe"}' '{"query":"tx_departures"}')" \
+    "not d['ok'] and 'admin' in d['error'].lower()"
+
+echo
+echo "=================================================="
 echo " Section 7: flight search validation"
 echo "=================================================="
 check "date outside Sep 1 - Dec 1 2024 rejected" \

@@ -56,19 +56,48 @@ after a practice run.
 ./hw4/tests/reports.sh    # all 12 reports, plus the access-control checks
 ```
 
+There is also a full end-to-end run, 98 checks covering every section:
+
+```bash
+./hw4/tests/verify-all.sh
+```
+
+**It rebuilds the database, so run it before a demo, never during one.**
+Useful the night before; useless five minutes in.
+
 ---
 
 ## The walkthrough
 
 ### Section 1 — register and log in
 
-`register.php` and `login.php`, built by the teammate against
-`AUTH-CONTRACT.md`. Register a normal user, for example `214-555-1234`, then
-log in.
+On **Register**, create a user: phone `214-555-1234`, password `secret123`
+twice, a name, a date of birth, and an email with an `@` and a `.com`. Leave
+gender blank to show it is the one optional field. You are logged straight in
+and your name appears in the header.
 
-Bad input to show the validation: a phone as `2145551234` (wrong format), two
-different passwords, a 7-character password, `2024-13-45` as a date of birth,
-an email with no `.com`, and re-registering a phone that already exists.
+Bad input worth showing, all rejected server-side, all reported at once rather
+than one at a time:
+
+| Rule | Input that breaks it |
+| --- | --- |
+| Phone format `ddd-ddd-dddd` | `2145551234` |
+| Passwords must match | two different ones |
+| At least 8 characters | `short12` |
+| Real date, 2/2/4 digits | `2024-02-31`, or `90-4-12` |
+| Email needs `@` and `.com` | `jane@example.org` |
+| Phone must be unique | register the same number twice |
+| Everything but gender required | clear the first name |
+
+Then log out and log back in to show `password_verify` working, and that a
+wrong password is refused. A wrong password and an unregistered phone give the
+same message on purpose, so the form cannot be used to discover which numbers
+have accounts.
+
+Note on ownership: these two pages were the teammate's task. A working version
+is committed so the app could be demoed and tested, and it is built to
+`AUTH-CONTRACT.md` so their version drops in by replacing four files. See the
+top of that document.
 
 ### Section 2 — current local date and time
 
@@ -293,7 +322,7 @@ section 8 says.
 ```
 hw4/
   index.php  flights.php  stays.php  cart.php  contact.php  my-account.php
-  register.php  login.php            <- teammate's, see AUTH-CONTRACT.md
+  register.php  login.php            <- reference build, see AUTH-CONTRACT.md
   mystyle.css  script.js             <- shared layout and the section 5 controls
   flights.json                       <- section 6, 50 flights
   hotels.xml                         <- section 8, 23 hotels

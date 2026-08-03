@@ -10,7 +10,10 @@ BASE="${1:-http://localhost:8080}"
 
 printf "%-16s %6s %8s %7s %7s %8s\n" PAGE HTTP PHP_ERRS NAV PROMPT BYTES
 
-for page in index.php flights.php stays.php cart.php contact.php my-account.php; do
+# All 7 pages. register.php and login.php are the only two that do not need a
+# login, so PROMPT is expected to be 0 on those and 1 on the rest.
+for page in index.php flights.php stays.php cart.php contact.php \
+            my-account.php register.php login.php; do
     body=$(curl -s "$BASE/$page")
     code=$(curl -s -o /dev/null -w "%{http_code}" "$BASE/$page")
 
@@ -26,7 +29,7 @@ done
 
 echo
 echo "PHP_ERRS should be 0 everywhere, NAV should be 7 everywhere."
-echo "PROMPT is 1 on the pages that need a login when nobody is signed in."
+echo "PROMPT is 1 on the pages that need a login, 0 on register and login."
 
 echo
 echo "=== php -l on every file ==="

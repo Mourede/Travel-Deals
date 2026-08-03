@@ -8,6 +8,38 @@ helpers are already in place on the `a4-php-mysql` branch.
 **Nothing else in `hw4/` needs to change.** If you think it does, message me
 first — we will collide.
 
+## Read this first: there is already a working version
+
+Since the deadline was close and nothing else could be demoed until login
+existed, I built a working `register.php` and `login.php` to this contract so
+the app is usable now. **Your version is still the one we ship** — treat mine
+as a placeholder and a reference.
+
+Four files, and they are the only ones you need to touch:
+
+```
+hw4/register.php        the form
+hw4/login.php           the form
+hw4/api/register.php    the validation and the INSERT
+hw4/api/login.php       password_verify and the session keys
+hw4/js/auth.js          posts the two forms
+```
+
+Replace them with yours and everything else keeps working, as long as you set
+the three session keys below. To compare against mine, the whole of section 1
+is covered by:
+
+```bash
+./hw4/tests/verify-all.sh
+```
+
+That runs 19 checks on registration and login alone — every validation rule,
+the duplicate-phone case, the hash check, and the admin check. If your version
+passes those, it is a clean swap. **DESTRUCTIVE:** it rebuilds the database, so
+do not run it during a demo.
+
+The rest of this document is the contract itself, and it has not changed.
+
 ---
 
 ## The one thing that matters
